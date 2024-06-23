@@ -137,7 +137,7 @@
     <ClInclude Include="..\src\common_thread.hpp" />
     <ClInclude Include="..\src\lock.hpp" />
     <ClInclude Include="..\src\map.hpp" />
-    <ClInclude Include="..\src\safe-map.hpp" />
+    <ClInclude Include="..\src\safemap.hpp" />
     <ClInclude Include="..\src\storage.hpp" />
     <ClInclude Include="..\src\typemap.hpp" />
     <ClInclude Include="..\src\value.hpp" />
