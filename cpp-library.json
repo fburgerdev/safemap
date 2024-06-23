@@ -1,6 +1,7 @@
 {
-    "project": "Example",
+    "project": "safemap",
     "author": "Florian Burger (git@fburgerdev)",
+    "namespace": "Safe",
     
     "tests": {
         "test": {

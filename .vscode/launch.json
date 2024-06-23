@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "debug: test",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": ".",
+            "program": "${workspaceFolder}/bin/tests/linux_debug/test",
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

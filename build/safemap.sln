@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "safemap", "safemap.vcxproj", "{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|Win32 = debug|Win32
+		dist|Win32 = dist|Win32
+		release|Win32 = release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.debug|Win32.ActiveCfg = debug|Win32
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.debug|Win32.Build.0 = debug|Win32
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.dist|Win32.ActiveCfg = dist|Win32
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.dist|Win32.Build.0 = dist|Win32
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.release|Win32.ActiveCfg = release|Win32
+		{624FDC81-CE2E-5B1D-D746-E6F343A5C17E}.release|Win32.Build.0 = release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

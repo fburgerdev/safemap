@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "cpp-library",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/modules/**/include",
+                "${workspaceFolder}/vendor/**/include"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "linux-gcc-x64",
+            "cStandard": "c17"
+        }
+    ],
+    "version": 4
+}
