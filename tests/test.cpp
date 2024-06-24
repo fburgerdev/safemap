@@ -24,7 +24,7 @@ int main() {
     entity.release();
     map.destroy(1);
     map.clean();
-    auto view = ReadView(2, map);
+    ReadView<int, Entity> view = WriteView(2, map);
     cout << view->name << endl;
     map.forEach([](int key, ReadLocked<Entity>& entity) {
         cout << key << ": " << entity->name << endl;
