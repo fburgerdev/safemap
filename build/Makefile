@@ -10,15 +10,18 @@ endif
 
 ifeq ($(config),debug)
   safemap_config = debug
+  test_config = debug
 endif
 ifeq ($(config),release)
   safemap_config = release
+  test_config = release
 endif
 ifeq ($(config),dist)
   safemap_config = dist
+  test_config = dist
 endif
 
-PROJECTS := safemap
+PROJECTS := safemap test
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -30,8 +33,15 @@ ifneq (,$(safemap_config))
 	@${MAKE} --no-print-directory -C . -f safemap.make config=$(safemap_config)
 endif
 
+test: safemap
+ifneq (,$(test_config))
+	@echo "==== Building test ($(test_config)) ===="
+	@${MAKE} --no-print-directory -C . -f test.make config=$(test_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f safemap.make clean
+	@${MAKE} --no-print-directory -C . -f test.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -45,5 +55,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   safemap"
+	@echo "   test"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

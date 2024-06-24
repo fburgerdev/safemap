@@ -3,10 +3,22 @@
 #include "storage.hpp"
 
 namespace Safe {
+    // Interface for SecureMap
+    class ISecureMap {
+    public:
+        // constructor / destructor
+        ISecureMap() = default;
+        virtual ~ISecureMap() = default;
+    };
+
     // SecureMap
     template<typename K, typename V>
-    class SecureMap {
+    class SecureMap : public ISecureMap {
     public:
+        // constructor / destructor
+        SecureMap() = default;
+        ~SecureMap() = default;
+
         // emplace
         template<typename... Args>
         void emplace(const K& key, Args&&... args) {

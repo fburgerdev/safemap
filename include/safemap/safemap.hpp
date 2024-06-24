@@ -241,10 +241,22 @@ namespace Safe {
 
 // #include "map.hpp" (HPPMERGE)
 namespace Safe {
+    // Interface for SecureMap
+    class ISecureMap {
+    public:
+        // constructor / destructor
+        ISecureMap() = default;
+        virtual ~ISecureMap() = default;
+    };
+
     // SecureMap
     template<typename K, typename V>
-    class SecureMap {
+    class SecureMap : public ISecureMap {
     public:
+        // constructor / destructor
+        SecureMap() = default;
+        ~SecureMap() = default;
+
         // emplace
         template<typename... Args>
         void emplace(const K& key, Args&&... args) {
@@ -426,66 +438,90 @@ namespace Safe {
     };
 }
 
-// #include "typemap.hpp" (HPPMERGE)
+// #include "collection.hpp" (HPPMERGE)
 namespace Safe {
-    // TypeMap
-    template<typename V>
-    class TypeMap {
+    // Collection
+    template<typename K>
+    class Collection {
     public:
         // emplace
-        template<typename T, typename... Args>
-        void emplace(Args&&... args) {
-            unique_lock lock(m_mapMutex);
-            m_map.try_emplace(typeid(T).hash_code(), forward<Args>(args)...);
+        template<typename V, typename... Args>
+        void emplace(const K& key, Args&&... args) {
+            get<V>().emplace(key, forward<Args>(args)...);
         }
         // erase
-        template<typename T>
-        void erase() {
-            unique_lock lock(m_mapMutex);
-            m_map.erase(typeid(T).hash_code());
+        template<typename V>
+        void erase(const K& key) {
+            get<V>().erase(key);
         }
         // clear
+        template<typename V>
         void clear() {
-            unique_lock lock(m_mapMutex);
-            m_map.clear();
+            get<V>().clear();
         }
 
-        // access
-        // :: at
-        template<typename T>
-        T& at() {
-            shared_lock lock(m_mapMutex);
-            return m_map.at(typeid(T).hash_code());
+        // destroy
+        template<typename V>
+        void destroy(const K& key) {
+            get<V>().destroy(key);
         }
-        // :: contains
-        template<typename T>
-        bool contains() {
-            shared_lock lock(m_mapMutex);
-            return m_map.contains(typeid(T).hash_code());
+        // clean
+        template<typename V>
+        void clean() {
+            get<V>().clean();
+        } 
+
+        // read / write lock
+        template<typename V>
+        ReadLocked<V> readLock(const K& key) const {
+            return get<V>().readLock(key);
+        }
+        template<typename V>
+        WriteLocked<V> writeLock(const K& key) {
+            return get<V>().writeLock(key);
         }
         
-        // iterate
-        // :: begin
-        auto begin() {
-            shared_lock lock(m_mapMutex);
-            return m_map.begin();
+        // addType
+        template<typename V>
+        void addType() {
+            unique_lock lock(m_mapMutex);
+            m_map.try_emplace(typeid(V).hash_code(), static_cast<ISecureMap*>(new SecureMap<K, V>()));
         }
-        auto begin() const {
+
+        // get
+        template<typename V>
+        SecureMap<K, V>& get() {
             shared_lock lock(m_mapMutex);
-            return m_map.begin();
+            return *reinterpret_cast<SecureMap<K, V>*>(m_map.at(typeid(V).hash_code()).get());
         }
-        // :: end
-        auto end() {
+        template<typename V>
+        const SecureMap<K, V>& get() const {
             shared_lock lock(m_mapMutex);
-            return m_map.end();
+            return *reinterpret_cast<SecureMap<K, V>*>(m_map.at(typeid(V).hash_code()).get());
         }
-        auto end() const {
-            shared_lock lock(m_mapMutex);
-            return m_map.end();
-        }
+
+        // // iterate
+        // // :: begin
+        // auto begin() {
+        //     shared_lock lock(m_mapMutex);
+        //     return m_map.begin();
+        // }
+        // auto begin() const {
+        //     shared_lock lock(m_mapMutex);
+        //     return m_map.begin();
+        // }
+        // // :: end
+        // auto end() {
+        //     shared_lock lock(m_mapMutex);
+        //     return m_map.end();
+        // }
+        // auto end() const {
+        //     shared_lock lock(m_mapMutex);
+        //     return m_map.end();
+        // }
     private:
         // map
-        Map<address, V> m_map;
+        Map<address, unique_ptr<ISecureMap>> m_map;
         mutable shared_mutex m_mapMutex;
     };
 }

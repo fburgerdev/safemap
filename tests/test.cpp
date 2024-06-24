@@ -1,4 +1,4 @@
-#include "safe-map.hpp"
+#include "safemap.hpp"
 
 using namespace Safe;
 struct Entity {
@@ -8,6 +8,11 @@ struct Entity {
     List<string> components;
 };
 int main() {
+    Collection<int> typemap;
+    typemap.addType<Entity>();
+    typemap.emplace<Entity>(1, "ENTT");
+    cout << typemap.readLock<Entity>(1)->name << endl;
+
     SecureMap<int, Entity> map;
     map.emplace(1, "Entity1");
     map.emplace(2, "Entity2");
