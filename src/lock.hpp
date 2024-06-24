@@ -1,7 +1,7 @@
 #pragma once
 #include "common_thread.hpp"
 
-namespace Safe {
+namespace Memory {
     // Locked
     template<typename T, typename TLock>
     class Locked {

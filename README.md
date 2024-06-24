@@ -6,7 +6,7 @@ describe your project ...
 
 ## Interface
 ```cpp
-namespace Safe {
+namespace Memory {
     // INSERT YOUR INTERFACE HERE
 }
 ```

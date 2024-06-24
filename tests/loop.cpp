@@ -2,7 +2,7 @@
 #include <chrono>
 #include <math.h>
 
-using namespace Safe;
+using namespace Memory;
 void dosth(int key, Array<double, 50>& array) {
     // cout << key << ' ';
     for (int j = 0; j < 50; ++j) {

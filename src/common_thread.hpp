@@ -3,7 +3,7 @@
 #include <shared_mutex> // shared_mutex, shared_lock
 #include <atomic> // atomic dtypes...
 
-namespace Safe {
+namespace Memory {
     // lock
     using std::unique_lock;
     using std::shared_lock;

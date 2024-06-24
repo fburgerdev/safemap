@@ -2,7 +2,7 @@
 #include "value.hpp"
 #include "storage.hpp"
 
-namespace Safe {
+namespace Memory {
     // Interface for SecureMap
     class ISecureMap {
     public:

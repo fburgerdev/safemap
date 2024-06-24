@@ -1,7 +1,7 @@
 #pragma once
 #include "lock.hpp"
 
-namespace Safe {
+namespace Memory {
     // SecureValue
     template<typename T>
     class SecureValue {

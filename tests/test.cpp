@@ -1,6 +1,6 @@
 #include "safemap.hpp"
 
-using namespace Safe;
+using namespace Memory;
 struct Entity {
     Entity(const string& name)
         : name(name) {}
@@ -29,5 +29,10 @@ int main() {
     map.forEach([](int key, ReadLocked<Entity>& entity) {
         cout << key << ": " << entity->name << endl;
     });
+
+    Set<GenericView<int>> views;
+    views.emplace(GenericView<int>(2, map));
+    for (auto& view : views)
+        cout << ReadView<int, Entity>(view)->name << endl;
     return EXIT_SUCCESS;
 }

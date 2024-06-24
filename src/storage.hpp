@@ -1,7 +1,7 @@
 #pragma once
 #include "common.hpp"
 
-namespace Safe {
+namespace Memory {
     // Storage
     template<typename T>
     class Storage {

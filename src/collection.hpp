@@ -1,7 +1,7 @@
 #pragma once
 #include "map.hpp"
 
-namespace Safe {
+namespace Memory {
     // Collection
     template<typename K>
     class Collection {

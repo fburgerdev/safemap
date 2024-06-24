@@ -21,7 +21,7 @@
 #include <optional> // Opt
 #include <iostream> // cout, endl
 
-namespace Safe {
+namespace Memory {
     // ranges
     namespace stdr = std::ranges;
 

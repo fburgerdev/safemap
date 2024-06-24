@@ -22,7 +22,7 @@
 
 
 // #include "common.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // ranges
     namespace stdr = std::ranges;
 
@@ -90,7 +90,7 @@ namespace Safe {
 }
 
 // #include "common_thread.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // lock
     using std::unique_lock;
     using std::shared_lock;
@@ -114,7 +114,7 @@ namespace Safe {
 }
 
 // #include "lock.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // Locked
     template<typename T, typename TLock>
     class Locked {
@@ -175,7 +175,7 @@ namespace Safe {
 }
 
 // #include "value.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // SecureValue
     template<typename T>
     class SecureValue {
@@ -199,7 +199,7 @@ namespace Safe {
 }
 
 // #include "storage.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // Storage
     template<typename T>
     class Storage {
@@ -240,7 +240,7 @@ namespace Safe {
 }
 
 // #include "map.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // Interface for SecureMap
     class ISecureMap {
     public:
@@ -381,13 +381,50 @@ namespace Safe {
 }
 
 // #include "view.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
+    // GenericView
+    template<typename K>
+    class GenericView {
+    public:
+        // constructor
+        GenericView() = default;
+        template<typename V>
+        GenericView(const K& key, SecureMap<K, V>& map)
+            : m_key(key), m_map(static_cast<void*>(&map)) {}
+        // key
+        const K& key() const {
+            return m_key;
+        }
+        // compare
+        bool operator==(const GenericView<K>& other) const {
+            return m_key == other.m_key;
+        }
+        bool operator<(const GenericView<K>& other) const {
+            return m_key < other.m_key;
+        }
+        bool operator>(const GenericView<K>& other) const {
+            return m_key > other.m_key;
+        }
+    
+        // friend
+        template<typename K2, typename V2>
+        friend class ReadView;
+        template<typename K2, typename V2>
+        friend class WriteView;
+    private:
+        // member
+        K m_key;
+        void* m_map = nullptr;
+    };
+
     // WriteView
     template<typename K, typename V>
     class WriteView {
     public:
         // constructor
         WriteView() = default;
+        WriteView(const GenericView<K>& view)
+            : m_key(view.m_key), m_map(reinterpret_cast<SecureMap<K, V>*>(view.m_map)) {}
         WriteView(const K& key, SecureMap<K, V>& map)
             : m_key(key), m_map(&map) {}
 
@@ -424,6 +461,8 @@ namespace Safe {
     public:
         // constructor
         ReadView() = default;
+        ReadView(const GenericView<K>& view)
+            : m_key(view.m_key), m_map(reinterpret_cast<const SecureMap<K, V>*>(view.m_map)) {}
         ReadView(const WriteView<K, V>& view)
             : m_key(view.m_key), m_map(view.m_map) {}
         ReadView(const K& key, const SecureMap<K, V>& map)
@@ -455,7 +494,7 @@ namespace Safe {
 }
 
 // #include "collection.hpp" (HPPMERGE)
-namespace Safe {
+namespace Memory {
     // Collection
     template<typename K>
     class Collection {
