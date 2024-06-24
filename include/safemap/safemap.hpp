@@ -381,6 +381,16 @@ namespace Safe {
         auto operator->() {
             return m_map->readLock(m_key); 
         }
+        // compare
+        bool operator==(const ReadView<K, V>& other) const {
+            return m_key == other.m_key;
+        }
+        bool operator<(const ReadView<K, V>& other) const {
+            return m_key < other.m_key;
+        }
+        bool operator>(const ReadView<K, V>& other) const {
+            return m_key > other.m_key;
+        }
     private:
         // member
         K m_key;
@@ -396,6 +406,16 @@ namespace Safe {
         // operator->
         auto operator->() {
             return m_map->writeLock(m_key); 
+        }
+        // compare
+        bool operator==(const WriteView<K, V>& other) const {
+            return m_key == other.m_key;
+        }
+        bool operator<(const WriteView<K, V>& other) const {
+            return m_key < other.m_key;
+        }
+        bool operator>(const WriteView<K, V>& other) const {
+            return m_key > other.m_key;
         }
     private:
         // member
