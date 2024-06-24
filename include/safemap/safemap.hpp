@@ -390,6 +390,11 @@ namespace Safe {
         WriteView() = default;
         WriteView(const K& key, SecureMap<K, V>& map)
             : m_key(key), m_map(&map) {}
+
+        // key
+        const K& key() const {
+            return m_key;
+        }
         // operator->
         auto operator->() {
             return m_map->writeLock(m_key); 
@@ -423,6 +428,11 @@ namespace Safe {
             : m_key(view.m_key), m_map(view.m_map) {}
         ReadView(const K& key, const SecureMap<K, V>& map)
             : m_key(key), m_map(&map) {}
+
+        // key
+        const K& key() const {
+            return m_key;
+        }
         // operator->
         auto operator->() {
             return m_map->readLock(m_key); 
