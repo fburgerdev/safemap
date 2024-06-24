@@ -375,6 +375,7 @@ namespace Safe {
     class ReadView {
     public:
         // constructor
+        ReadView() = default;
         ReadView(const K& key, const SecureMap<K, V>& map)
             : m_key(key), m_map(&map) {}
         // operator->
@@ -394,13 +395,14 @@ namespace Safe {
     private:
         // member
         K m_key;
-        const SecureMap<K, V>* m_map;
+        const SecureMap<K, V>* m_map = nullptr;
     };
     // WriteView
     template<typename K, typename V>
     class WriteView {
     public:
         // constructor
+        WriteView() = default;
         WriteView(const K& key, SecureMap<K, V>& map)
             : m_key(key), m_map(&map) {}
         // operator->
@@ -420,7 +422,7 @@ namespace Safe {
     private:
         // member
         K m_key;
-        SecureMap<K, V>* m_map;
+        SecureMap<K, V>* m_map = nullptr;
     };
 }
 
